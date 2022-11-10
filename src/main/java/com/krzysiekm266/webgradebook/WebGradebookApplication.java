@@ -23,9 +23,8 @@ public class WebGradebookApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Student st1 = new Student();
-		st1.setFirstName("Jan");
-		st1.setLastName("Kowalski");
+		Student st1 = new Student("Jan","Kowalski");
+		
 
 		Subject sub1 = new Subject();
 		sub1.setName("Matematyka");
