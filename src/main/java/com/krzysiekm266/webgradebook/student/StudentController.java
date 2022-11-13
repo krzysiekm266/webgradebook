@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(path = "/student")
+@RequestMapping(path = "/students")
 public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @GetMapping(path = "/all")
+    @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         return this.studentService.findAll();
     }
@@ -33,7 +33,7 @@ public class StudentController {
     }
 
     @GetMapping(path = "/{studentId}")
-    public ResponseEntity<Student> readStudent(@PathParam(value = "studentId") Long id) {
+    public ResponseEntity<Student> getStudent(@PathParam(value = "studentId") Long id) {
         return this.studentService.findById(id);
     }
 

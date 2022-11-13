@@ -26,8 +26,7 @@ public class WebGradebookApplication implements CommandLineRunner {
 		Student st1 = new Student("Jan","Kowalski");
 		
 
-		Subject sub1 = new Subject();
-		sub1.setName("Matematyka");
+		Subject sub1 = new Subject("Matematyka");
 		
 
 		st1.getSubjects().add(sub1);

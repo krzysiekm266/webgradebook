@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.krzysiekm266.webgradebook.student.exceptions.StudentIllegalStateException;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class StudentService {
-    @Autowired
     StudentRepository studentRepository;
 
     public ResponseEntity<List<Student>> findAll() {
