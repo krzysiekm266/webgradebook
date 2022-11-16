@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -22,23 +23,23 @@ public class StudentController {
     StudentService studentService;
 
     @GetMapping(path = "/students")
-    public ResponseEntity<List<Student>> getAllStudents() {
-        return this.studentService.findAll();
+    public ResponseEntity<List<Student>> getAllStudentsPage(@RequestParam(name = "page") Integer page) {
+        return new ResponseEntity<>(this.studentService.findAll(page),HttpStatus.OK);    
     }
 
     @PostMapping(path = "/students")
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        return this.studentService.create(student);
+        return new ResponseEntity<>(this.studentService.create(student),HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/students/{studentId}")
     public ResponseEntity<Student> getStudent(@PathParam(value = "studentId") Long id) {
-        return this.studentService.findById(id);
+        return  new  ResponseEntity<>(this.studentService.findById(id),HttpStatus.OK);
     }
 
     @PutMapping(path = "/students/{studentId}")
     public ResponseEntity<Student> updateStudent(@PathParam(value = "studentId") Long id, @RequestBody Student student) {
-        return this.studentService.update(id, student);
+        return new ResponseEntity<>(this.studentService.update(id, student),HttpStatus.OK);
 
     }
     
