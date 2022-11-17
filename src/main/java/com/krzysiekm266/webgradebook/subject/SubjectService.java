@@ -1,9 +1,9 @@
 package com.krzysiekm266.webgradebook.subject;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 public class SubjectService {
     private SubjectRepository subjectRepository;
     
-
-    public ResponseEntity<List<Subject>> getAllSubjects() {
-         List<Subject> subjects = this.subjectRepository.findAll();
-        return new ResponseEntity<>(subjects,HttpStatus.OK);
+    public List<Subject> findAll(Integer page) {
+        List<Subject> subjects = this.subjectRepository.findAll(Pageable.ofSize(page))
+            .stream().collect(Collectors.toList()); 
+        return subjects;   
     }
 }
