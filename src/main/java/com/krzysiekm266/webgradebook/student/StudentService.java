@@ -24,6 +24,7 @@ public class StudentService {
     public List<Student> findAll(Integer page) {
         List<Student> students = this.studentRepository.findAll(Pageable.ofSize(page))
             .stream().collect(Collectors.toList());
+          
         return students;
     }
 

@@ -34,7 +34,7 @@ public class StudentController {
 
     @GetMapping(path = "/students/{studentId}")
     public ResponseEntity<Student> getStudent(@PathParam(value = "studentId") Long id) {
-        return  new  ResponseEntity<>(this.studentService.findById(id),HttpStatus.OK);
+        return  new  ResponseEntity<>(this.studentService.findById(id),HttpStatus.FOUND);
     }
 
     @PutMapping(path = "/students/{studentId}")
