@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.krzysiekm266.webgradebook.student.exceptions.StudentIllegalStateException;
 
@@ -22,7 +20,7 @@ public class StudentService {
     StudentRepository studentRepository;
 
     public List<Student> findAll(Integer page) {
-        List<Student> students = this.studentRepository.findAll(Pageable.ofSize(page))
+        List<Student> students = this.studentRepository.findAll(PageRequest.of(page, 10))
             .stream().collect(Collectors.toList());
           
         return students;
@@ -45,7 +43,8 @@ public class StudentService {
 
         Field[] field = student.getClass().getDeclaredFields();
         Boolean isNull = Stream.of(field)
-            .filter(f -> !(f.getName().equals("id")) ).anyMatch( fld -> { 
+            .filter(f -> !(f.getName().equals("id")) )
+            .anyMatch( fld -> { 
                 try {
                     return fld.get(fld.getName()) == null;
                 } catch (Exception e) {

@@ -23,17 +23,14 @@ public class WebGradebookApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Student st1 = new Student("Jan","Kowalski");
+		// Student student1 = new Student("Jan","Kowalski");
+		// Subject subject1 = new Subject("Matematyka");
+		
+		// student1.addSubject(subject1);
 		
 
-		Subject sub1 = new Subject("Matematyka");
-		
-
-		st1.getSubjects().add(sub1);
-		sub1.addStudent(st1);
-
-		this.subjectRepository.save(sub1);
-		this.studentRepository.save(st1);
+		// this.subjectRepository.save(subject1);
+		// this.studentRepository.save(student1);
 
 		
 		

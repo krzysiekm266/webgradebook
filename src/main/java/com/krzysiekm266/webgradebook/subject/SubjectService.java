@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class SubjectService {
     private SubjectRepository subjectRepository;
     
     public List<Subject> findAll(Integer page) {
-        List<Subject> subjects = this.subjectRepository.findAll(Pageable.ofSize(page))
+        List<Subject> subjects = this.subjectRepository.findAll(PageRequest.of(page, 10))
             .stream().collect(Collectors.toList()); 
         return subjects;   
     }
@@ -29,18 +30,19 @@ public class SubjectService {
         return SubjectById;
     }
 
-    public Subject create(Subject Subject) {
-        Subject newSubject =  this.subjectRepository.save(Subject);
+    public Subject create(Subject subject) {
+        Subject newSubject =  this.subjectRepository.save(subject);
         return newSubject;
     }
 
-    public Subject update(Long id,Subject Subject) {
-        Subject SubjectById =  this.subjectRepository.findById(id)
+    public Subject update(Long id,Subject subject) {
+        Subject subjectById =  this.subjectRepository.findById(id)
             .orElseThrow( () -> new SubjectIllegalStateException("Subject required."));
 
-        Field[] field = Subject.getClass().getDeclaredFields();
+        Field[] field = subject.getClass().getDeclaredFields();
         Boolean isNull = Stream.of(field)
-            .filter(f -> !(f.getName().equals("id")) ).anyMatch( fld -> { 
+            .filter(f -> !(f.getName().equals("id")) )
+            .anyMatch( fld -> { 
                 try {
                     return fld.get(fld.getName()) == null;
                 } catch (Exception e) {
@@ -53,7 +55,7 @@ public class SubjectService {
         }    
         
 
-        Subject updatedSubject =  this.subjectRepository.saveAndFlush(SubjectById);
+        Subject updatedSubject =  this.subjectRepository.saveAndFlush(subjectById);
         return updatedSubject;
     }
 

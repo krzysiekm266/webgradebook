@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,8 +25,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "Student")
-@Table(name = "students")
+@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
@@ -42,15 +43,31 @@ public class Student implements Serializable {
     @Column(name = "last_name", columnDefinition = "TEXT")
     private String lastName;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH })
-    @Column(name = "subjects")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    // @JoinTable(name = "students_subjects",
+    //     joinColumns = { @JoinColumn(name = "student_id") },
+    //     inverseJoinColumns = { @JoinColumn(name = "subject_id") }
+    // )
     private Set<Subject> subjects = new HashSet<>();
+
+    public void addSubject(Subject subject) {
+    this.subjects.add(subject);
+    subject.getStudents().add(this);
+
+    }
+
+    public void removeSubject(Subject subject) {
+    this.subjects.remove(subject);
+    subject.getStudents().remove(this);
+    }
 
     public Student(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    
+
+   
 
 }
